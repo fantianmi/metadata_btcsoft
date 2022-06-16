@@ -1,0 +1,88 @@
+<extend name="Public/base"/>
+
+<block name="body">
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="{:U('Admin/Index/index')}">首页  </a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>空投公示</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 标题栏 -->
+  <div class="main-title">
+    <h2>空投列表</h2>
+  </div>
+  <div class="clearfix">
+    <div class="col-xs-9 pd0">
+      <a class="btn btn-primary" href="{:U('editAirdrop')}">新增</a>
+      <button class="btn btn-danger ajax-post" url="{:U('deleteAirdrop')}"
+              target-form="ids">删除
+      </button>
+    </div>
+  </div>
+  <!-- 数据列表 -->
+  <div class="data-table with-padding adminlte-os-table">
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+        <th class="">ID</th>
+        <th class="">名称</th>
+        <th class="">创建时间</th>
+        <th class="">创建者</th>
+        <th class="">状态</th>
+        <th>空投API调用结果</th>
+<!--        <th>空投API查询结果</th>-->
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!--{:U('User/changeStatus?method=forbidUser&id='.$vo['uid'])}-->
+      <notempty name="lists">
+        <volist name="lists" id="vo">
+          <tr>
+            <td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}"/></td>
+            <td>{$vo.id}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.create_time|time_format}</td>
+            <td>{$vo.admin}</td>
+            <td>{$vo.status}</td>
+            <td>{$vo.result_api}</td>
+<!--            <td>{$vo.query_api}</td>-->
+            <td>
+              <a href="{:U('editAirdrop?id='.$vo['id'])}" class="btn btn-xs btn-primary">编辑</a>
+              <a href="{:U('airdropDetails?aid='.$vo['id'])}" class="btn btn-xs btn-info">参与用户设置</a>
+              <php>
+                if($vo['status'] != 'processing'){
+              </php>
+              <a href="javascript:;" class="btn btn-xs btn-warning" onclick="startAirdrop({$vo.id})">开始空投</a>
+              <php>}else{</php>
+              <a href="{:U('startAirdrop?aid='.$vo['id'])}" class="btn btn-xs">查看空投状态</a>
+              <php>}</php>
+            </td>
+          </tr>
+        </volist>
+        <else/>
+        <td colspan="12" class="text-center">暂无数据</td>
+      </notempty>
+      </tbody>
+    </table>
+  </div>
+</block>
+
+<block name="script">
+  <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+  <script src="__PUBLIC__/zui/js/zui.min.js"></script>
+  <script>
+    function startAirdrop(aid) {
+      if (confirm("确认开始空投")) {
+        location.href = "admin/nftunit/startAirdrop?aid=" + aid;
+      }
+    }
+  </script>
+</block>

@@ -1,0 +1,56 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="{:U('Admin/Index/index')}">首页  </a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>空投公示</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>{$title}</h2>
+    </div>
+    <div class="clearfix">
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table with-padding adminlte-os-table">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="">空投标识</th>
+                <th class="">空投时间</th>
+                <th class="">空投详情</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--{:U('User/changeStatus?method=forbidUser&id='.$vo['uid'])}-->
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$vo.title}</td>
+                        <td>{$vo.process_time|time_format}</td>
+                        <td><a href="https://polygonscan.com/tx/{$vo['txHash']}" target="_blank">{$vo.txHash}</a></td>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="12" class="text-center">暂无数据</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="with-padding">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+    <script src="__PUBLIC__/zui/js/zui.min.js"></script>
+</block>

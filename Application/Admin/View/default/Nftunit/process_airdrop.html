@@ -1,0 +1,76 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="{:U('Admin/Index/index')}">首页 </a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span></span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>{$title}</h2>
+    </div>
+    <div class="clearfix">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">airdrop lists (total is {$list|sizeof} address)</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <ul>
+                    <li>[ address ] [ amount ]</li>
+                    <php>foreach($list as $val){</php>
+                    <li>[ {$val.address} ] [ {$val.amount} BRAIN ]</li>
+                    <php>}</php>
+                </ul>
+                <ul>
+                    <li>result: {$result}</li>
+                    <php>
+                        $jsonResult = json_decode(json_decode($result,true),true);
+
+                        $txid = "";
+                        if($jsonResult['code'] == 100){
+                            $txid = $jsonResult['data'];
+                        }
+                    </php>
+                    <li>txHash:{$txid}</li>
+                    <php>if($txid){</php>
+                    <li>
+                        <a href="https://polygonscan.com/tx/{$txid}" target="_blank">区块链浏览器查看</a>
+                    </li>
+                    <php>}</php>
+                    <php>if($jsonResult['code'] == 500){</php>
+                    <li><a href="javascript:;" onclick="restartAirdrop({$aid})">重新发送空投</a></li>
+                    <php>}</php>
+                </ul>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</block>
+
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+    <script src="__PUBLIC__/zui/js/zui.min.js"></script>
+    <script type="text/javascript">
+        function restartAirdrop(aid){
+            let post = {aid: aid}
+            $.post("/admin/nftunit/restartAirdrop", post, function (res) { //回传函数
+                if (res.status == 1) {
+                    alert("重新发起成功");
+                    location.href = location.href;
+                }else{
+                    alert(res.info);
+                }
+            })
+        }
+    </script>
+</block>

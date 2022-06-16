@@ -1,0 +1,125 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="{:U('Admin/Index/index')}">首页 </a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span></span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>{$title}</h2>
+    </div>
+    <div class="clearfix">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">请填写数据</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="form" style="margin-bottom:30px;">
+                    <input type="hidden" id="aid" value="{$aid}">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="picker" id="user" data-placeholder="请选择用户">
+                                <input type="text" name="user" id="user_value">
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" placeholder="空投数量" id="amount_value">
+                        </div>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" placeholder="空投原因" id="reason_value">
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-primary" onclick="jsAdd()">添加</button>
+                            <a class="btn" href="{:U('nftunit/airdropdetails?aid='.$aid)}" style="margin-left: 10px">返回列表</a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>用户编号</th>
+                        <th>用户名称</th>
+                        <th>用户地址</th>
+                        <th>空投数量</th>
+                        <th>空投原因</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <php>
+                        foreach($list as $val){
+                    </php>
+                    <tr>
+                        <td>{$val.nftunit_id}</td>
+                        <td>{$val.nickname}</td>
+                        <td>{$val.address}</td>
+                        <td>{$val.amount}</td>
+                        <td>{$val.reason}</td>
+                    </tr>
+                    <php>}</php>
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</block>
+
+<block name="script">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.0.3.min.js"></script>
+    <!--<![endif]-->
+    <script src="__PUBLIC__/js/particles.min.js"></script>
+    <script src="__PUBLIC__/zui_1.10.0/js/zui.js"></script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/zui_1.10.0/lib/picker/zui.picker.css" media="all">
+    <script src="__PUBLIC__/zui_1.10.0/lib/picker/zui.picker.js"></script>
+    <script type="text/javascript">
+        $.post("/admin/nftunit/jsUserData", [], function (res) { //回传函数
+            let optionList = [];
+            if (res.status == 1) {
+                optionList = JSON.parse(res.info)
+            }
+            console.log(optionList)
+            $('#user').picker({list: optionList});
+        })
+
+        function jsAdd() {
+            let user = $("#user_value").val();
+            let amount = $("#amount_value").val();
+            let reason = $("#reason_value").val();
+            let aid = $("#aid").val();
+            let post = {
+                aid: aid,
+                user: user,
+                amount: amount,
+                reason: reason
+            };
+
+            $.post("/admin/nftunit/jsAddAirdropDetailAjax", post, function (data) {
+                if (data.status != 1) {
+                    toast.error(data.info);
+                } else {
+                    location.reload();
+                }
+            });
+        }
+
+        // var optionList = [
+        //     {text: 'Apple', value: 'apple', keys: 'fruit foods'},
+        //     {text: 'Banana', value: 'banana', keys: 'fruit foods'},
+        //     // ...
+        // ];
+
+
+    </script>
+</block>
