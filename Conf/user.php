@@ -15,5 +15,5 @@
 define('UC_APP_ID', 1); //应用ID
 define('UC_API_TYPE', 'Model'); //可选值 Model / Service
 define('UC_AUTH_KEY', 'xVDCW4UlOqSocBsvb3NeP0HFnzuAwGgTEtpQ26hy'); //加密KEY
-define('UC_DB_DSN', 'mysqli://nftunit:rTE3PHhnwaekfDyW@127.0.0.1:3306/nftunit'); // 数据库连接，使用Model方式调用API必须配置此项
+define('UC_DB_DSN', 'mysqli://polygon_erc721:eEXTsizFkAKy4XkR@127.0.0.1:3306/polygon_erc721'); // 数据库连接，使用Model方式调用API必须配置此项
 define('UC_TABLE_PREFIX', 'ocenter_'); // 数据表前缀，使用Model方式调用API必须配置此项

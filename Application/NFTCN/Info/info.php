@@ -8,9 +8,9 @@
  */
 return array(
     //模块名
-    'name' => 'Nftunit',
+    'name' => 'NFTCN',
     //别名
-    'alias' => 'Nftunit',
+    'alias' => 'NFTCN',
     //版本号
     'version' => '1.0.0',
     //是否商业模块,1是，0，否

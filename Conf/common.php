@@ -42,9 +42,9 @@ return array(
     /* 数据库配置 */
     'DB_TYPE' => 'mysqli', // 数据库类型
     'DB_HOST' => '127.0.0.1', // 服务器地址
-    'DB_NAME' => 'nftunit', // 数据库名
-    'DB_USER' => 'nftunit', // 用户名
-    'DB_PWD' => 'rTE3PHhnwaekfDyW',  // 密码
+    'DB_NAME' => 'polygon_erc721', // 数据库名
+    'DB_USER' => 'polygon_erc721', // 用户名
+    'DB_PWD' => 'eEXTsizFkAKy4XkR',  // 密码
     'DB_PORT' => '3306', // 端口
     'DB_PREFIX' => 'ocenter_', // 数据库表前缀
 

@@ -10,6 +10,7 @@
 namespace Admin\Controller;
 
 use User\Api\UserApi;
+use User\Model\UcenterMemberModel;
 
 /**
  * 后台首页控制器
@@ -22,14 +23,16 @@ class PublicController extends \Think\Controller
     {
         if ($post) {
             $address = strtolower($address);
-            $uid = UCenterMember()->loginWithAddress($address);
+
+            $UcenterMember = new UcenterMemberModel();
+            $uid = $UcenterMember->loginWithAddress($address);
             if (0 < $uid) { //UC登录成功
                 /* 登录用户 */
                 $Member = D('Member');
                 if ($Member->login($uid)) { //登录用户
                     //TODO:跳转到登录前页面
 //                    $groupId = M("AuthGroupAccess")->where(['uid' => $uid])->getField("group_id");
-                    $url = U("Nftunit/index"); // homepage
+                    $url = U("Nftcn/index"); // homepage
                     $this->success(L('_LOGIN_SUCCESS_'), $url);
                 } else {
                     $this->error($Member->getError());

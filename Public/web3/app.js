@@ -9,7 +9,7 @@
  */
 
 
-const chainId = 1
+const chainId = 137
 var currentAccount = "";
 
 /**
@@ -249,7 +249,7 @@ function connectWallet() {
  * 初始化合约
  */
 function initContract() {
-  const networkName = "ethereum main net";
+  const networkName = "polygon mainnet";
   window.ethereum.request({
     method: "wallet_switchEthereumChain",
     params: [{

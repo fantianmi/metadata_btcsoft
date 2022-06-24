@@ -29,7 +29,7 @@ class IndexController extends AdminController
             if($groupId == 5){
                 $this->redirect("nftunit/airdroplog");
             }else{
-                $this->redirect("Nftunit/index"); // homepage
+                $this->redirect("NFTCN/index"); // homepage
             }
 
             $this->display();
